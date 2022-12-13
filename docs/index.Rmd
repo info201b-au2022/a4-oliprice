@@ -1,6 +1,6 @@
 ---
-title: "Your A4 Report Title (TODO: Revise title)"
-author: "Your Name"
+title: "The Flawed U.S. Prison System"
+author: "Olivia Price"
 date: '2022-11-01'
 output: html_document
 ---
@@ -11,35 +11,69 @@ source("../source/analysis.R")
 ```
 
 ## Abstract 
-[TODO: Include a short abstract (about 50 words)]
-
-# Test (TODO: Remove before submission!!)
-```{r echo=FALSE}
-q1_string <- test_query1()
-num <- 5
-```
-As you know, this is a markdown report. The [R Markdown Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf) is **useful!**
-
-* Here's a test of a dynamic variable. Say **"`r q1_string`!!!** 
-* Here's another test. A vector
-of numbers: `r test_query2(num)`.
-
-Recall that _{r echo=TRUE}_ can be used to display the code, 
-which is very useful when developing and debugging a report. Here's an example: 
-
-```{r echo=TRUE}
-num <- 5
-sum <- sum(test_query2(num))
-print(sum)
-```
+Through analysis of a data set consisting of incarceration trends from 1970 to 2018, this report will showcase the patterns of inequality of the prison system in the U.S. This analysis will include charts and summaries that paint a picture of how incarceration and racial disparities are growing.
 
 ## Introduction 
-[TODO]
+This assignment aims to expose the patterns of inequality within the prison system through analysis of incarceration data. This data set can help reveal certain social issues implicated by the prison system such as inequality and racism through the disproportionate policing of people of color, immigrants, and those in poverty. Mass incarceration tears apart these communities and allows for this damaging cycle to continue.
+
+Research on this data set can allow for the spread of awareness to politicians and activists, which can lead to people to take action and make policy changes. Those that are effected by mass incarceration and are a part of the communities disproportionately effected can then have their communities rebuilt and no longer be targeted by the negative implications of mass incarceration if awareness to those in power is given. Taking social action and community efforts are essential for the research of this data to be beneficial.
+
+The questions I aim to answer in this report are:
+1. How do rates of incarceration of people of color differ from White people?
+2. How have incarceration rates changed over time?
+3. What are the geographic trends of incarceration of Black people?
 
 ## Data Summary 
-[TODO]
+The data consisting of incarceration data from 2017 to 2018 can reveal certain patterns within the prison system. Summarizing the data told me a few general facts about what is important to look at. The first question I asked is:
+What is the average number for the Black jail population in all the counties in 2018? I wanted to know what the current state of incarceration was like for Black people. I found that there was an average of `r summary_info$average_black_2018` Black people in jail in 2018. I then asked which county had the highest number of people jailed from ICE as this can show which area seems to be targeting immigrants. I found that `r summary_info$max_ice` had the highest number of people jailed from ICE. Lastly, I wanted to know how the population of jailed people changed in Los Angeles County from 1970 to 2018 as this can help show how mass incarceration has increased as whole, exposing the issue of criminalization increasing. I found that there was an increase of `r summary_info$total_pop_change` people jailed in Los Angeles County from 1970 to 2018.
 
-[TODO ... other sections ... See Canvas for details]
+## Growth of the U.S. Prison Population
 
-_All the very best with your work!_
+```{r include=FALSE, message=FALSE}
+get_year_jail_pop()
+```
 
+```{r echo=FALSE, message=FALSE}
+plot_jail_pop_for_us()
+```
+
+The bar chart demonstrates an overall increase in total jail population in the U.S. 1970 to 1980 showed stability in the jail population, but 1980 begins a huge, sharp increase up until around 2007. The end of the bar graph shows a slight decrease in the total jail population.
+
+## Growth of Prison Population by State
+```{r include=FALSE, message=FALSE}
+get_jail_pop_by_states(c("WA", "OR", "CA"))
+```
+
+```{r echo=FALSE, message=FALSE}
+plot_jail_pop_by_states(c("WA", "OR", "CA"))
+```
+
+When looking at California, Oregon, and Washington, it's clear to see that California had a huge increase in the jail population around 1980 to 1990. After that, the jail population staggered around that number. Oregon and Washington appear to have a similar pattern, with a much slower increase in jail population.
+
+## Variable comparison
+```{r include=FALSE, message=FALSE}
+grouped_by_state("CA")
+get_jail_prop("CA")
+```
+
+```{r echo=FALSE, message=FALSE}
+plot_black_jail_prop("CA")
+plot_white_jail_prop("CA")
+```
+
+This chart helps answer the question: How do rates of incarceration of people of color differ from White people? When comparing the proportion of the Black population that's in jail to the White population, it's clear to see that Black people are disproportionately more affected by mass incarceration. This is clearer to see when you notice the difference in the y-axis values of both graphs. There are a higher proportion of black people in jail when compared to white people, all throughout time. Despite the proportion of black people in jail decreasing, this proportion is still much higher than white people.
+
+## Map
+```{r include=FALSE, message=FALSE}
+grouped_by_2018()
+get_jail_prop_2018()
+state_code_join()
+get_state_shape()
+blank_theme()
+```
+
+```{r echo=FALSE, message=FALSE}
+plot_state_shape()
+```
+
+I asked the question: How is the proportion of Black people in jail distributed geographically across the United States in 2018? When looking at the map, it's clear that the proportion of Black people jailed in the U.S varies across the U.S. At first glance, it appears that the inner states of the U.S have the highest proportions, with Wyoming being the reddest. The states surrounding Wyoming also appear to have a higher proportion than the coastal states. There are some southern states that also have a higher proportion than the surrounding states, with Louisiana, Kentucky, and West Virginia being the main stand outs.
